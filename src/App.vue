@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Loading v-show="isshow"></Loading>
+     <router-view></router-view>
+     <!-- <Test></Test> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Loading from '@/components/Loading'
+import Test from '@/views/Test.vue'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return {
+      isshow:false,
+    }
+  },
+  components:{
+    Loading,
+    Test,
+  },
+  methods:{
+    openLoading(){
+      this.isshow = true
+    },
+    closeLoading(){
+      this.isshow = false
+    },
+  },
+  mounted(){
+    this.$bus.$on('openLoading',this.openLoading)
+    this.$bus.$on('closeLoading',this.closeLoading)
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+
 </style>
